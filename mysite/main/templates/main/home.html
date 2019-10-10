@@ -1,8 +1,19 @@
-{% load static %}
+{% extends "main/header.html" %}
 
-
-{% for prod in products %}
-  <p>{{prod.productName}}</p>
-  <p>{{prod.price}}</p>
-  <br>
-{% endfor %}
+{% block content %}
+<div class="row">
+  {% for prod in products %}
+    <div class="col s12 m6">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">{{prod.productName}}</span>
+          <p style="font-size:70%">{{prod.price}}</p>
+        </div>
+        <div class="card-action">
+          <a href="#">Details</a>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
