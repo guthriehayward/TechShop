@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+<<<<<<< HEAD
 *.py[cod]
 
 # C extensions
@@ -48,3 +49,6 @@ coverage.xml
 
 # Sphinx documentation
 docs/_build/
+=======
+*.pyc
+>>>>>>> 13ac91d3dd79100bc71c1672bb286f8b6662fb75
