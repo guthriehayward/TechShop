@@ -1,16 +1,31 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product
+from .models import Product, ProductCategory
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import NewUserForm
 
 # Create your views here.
+
+def single_slug(request, single_slug):
+    categories = [c.category_slug for c in ProductCategory.objects.all()]
+    if single_slug in categories:
+        matching_products = Product.objects.filter(product_category__category_slug=single_slug)
+        return render(request,
+                      "main/category.html",
+                      {"matching_products": matching_products})
+
+    products = [p.product_slug for p in Product.objects.all()]
+    if single_slug in products:
+        return HttpResponse(f"{single_slug} is a product!")
+
+    return HttpResponse(f"{single_slug} does not correspond to anything.")
+
 def homepage(request):
     return render(request=request,
-                  template_name='main/home.html',
-                  context={'products': Product.objects.all})
+                  template_name='main/categories.html',
+                  context={'Categories': ProductCategory.objects.all})
 
 
 def register(request):
