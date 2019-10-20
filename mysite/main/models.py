@@ -1,14 +1,12 @@
 from django.db import models
 
-# Create your models here
-
 class ProductCategory(models.Model):
     product_category = models.CharField(max_length = 255)
     category_summary = models.CharField(max_length = 255)
     category_slug = models.CharField(max_length = 255)
 
     class Meta:
-        verbose_name_plural = "Categories"
+        verbose_name_plural = "categories"
 
     def __str__(self):
         return self.product_category
