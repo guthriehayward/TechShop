@@ -12,9 +12,15 @@ def single_slug(request, single_slug):
     categories = [c.category_slug for c in ProductCategory.objects.all()]
     if single_slug in categories:
         matching_products = Product.objects.filter(product_category__category_slug=single_slug)
+        product_urls = {}
+
+        for m in matching_products.all():
+            specific_product = Product.objects.filter(product_slug__product_slug=m.product_category).earliest("uploadDate")
+            product_urls[m] = specific_product.product_slug
+
         return render(request,
                       "main/category.html",
-                      {"matching_products": matching_products})
+                      {"matching_products": matching_products, "specific_product": product_urls})
 
     products = [p.product_slug for p in Product.objects.all()]
     if single_slug in products:
