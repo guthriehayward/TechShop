@@ -15,7 +15,7 @@ def single_slug(request, single_slug):
         product_urls = {}
 
         for m in matching_products.all():
-            specific_product = Product.objects.filter(product_slug__product_slug=m.product_category).earliest("uploadDate")
+            specific_product = Product.objects.filter(productName__product_slug=m.product_category).earliest("uploadDate")
             product_urls[m] = specific_product.product_slug
 
         return render(request,
@@ -32,6 +32,7 @@ def homepage(request):
     return render(request=request,
                   template_name='main/categories.html',
                   context={'Categories': ProductCategory.objects.all})
+
 
 
 def register(request):
