@@ -1,26 +1,24 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
-from .models import Product, ProductCategory
+from .models import Product, ProductCategory, ProductManufacturer
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, logout, authenticate
 from django.contrib import messages
 from .forms import NewUserForm
 
-# Create your views here.
-
 def single_slug(request, single_slug):
     categories = [c.category_slug for c in ProductCategory.objects.all()]
     if single_slug in categories:
-        matching_products = Product.objects.filter(product_category__category_slug=single_slug)
+        matching_manufacturers = ProductManufacturer.objects.filter(product_category__category_slug=single_slug)
         product_urls = {}
 
-        for m in matching_products.all():
-            specific_product = Product.objects.filter(productName__product_slug=m.product_category).earliest("uploadDate")
-            product_urls[m] = specific_product.product_slug
+        for m in matching_manufacturers.all():
+            first_product = Product.objects.filter(product_manufacturer__product_manufacturer=m.product_manufacturer).earliest("uploadDate")
+            product_urls[m] = first_product.product_slug
 
-        return render(request,
-                      "main/category.html",
-                      {"matching_products": matching_products, "specific_product": product_urls})
+        return render(request=request,
+                      template_name='main/category.html',
+                      context={'Manufacturers': matching_manufacturers, 'first_products': product_urls})
 
     products = [p.product_slug for p in Product.objects.all()]
     if single_slug in products:
@@ -32,7 +30,6 @@ def homepage(request):
     return render(request=request,
                   template_name='main/categories.html',
                   context={'Categories': ProductCategory.objects.all})
-
 
 
 def register(request):

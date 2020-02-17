@@ -2,13 +2,13 @@
 
 {% block content %}
   <div class="row">
-    {% for prod in matching_products %}
+    {% for man, firstproduct in first_products.items %}
       <div class="col s12 m6">
-        <a href="{{cat.category_slug}}", style="color:#000">
+        <a href="{{firstproduct}}", style="color:#000">
           <div class="card hoverable">
             <div class="card-content">
-              <div class="card-title">{{prod.productName}}</div>
-              <p>{{prod.price}}</p>
+              <div class="card-title">{{man.product_manufacturer}}</div>
+              <p>{{man.manufacturer_summary}}</p>
             </div>
           </div>
         </a>
